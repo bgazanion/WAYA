@@ -36,7 +36,7 @@ __Windows__
 This project is license under the Apache version 2.0 License - see the LICENSE.md file for details.
 
 The following bundled third-party jars are distributed under the Apache version 2.0 license:
-- FlatLaf 1.6.4 - [www.formdev.com](www.formdev.com/flatlaf) - by FormDev Software GmbH
-- Genson 1.6 - [www.genson.io](www.genson.io) - by Eugen Cepoi
+- FlatLaf 1.6.4 - [www.formdev.com](https://www.formdev.com/flatlaf) - by FormDev Software GmbH
+- Genson 1.6 - [genson.io](http://genson.io) - by Eugen Cepoi
 
 The images from the example are from the [professional icons](https://www.flaticon.com/free-icons/professional) created by [ultimatearm](https://www.flaticon.com/authors/ultimatearm) on Flaticon.
