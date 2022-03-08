@@ -6,7 +6,7 @@ WAYA, a software with a graphical interface to help you remember things on peopl
 
 WAYA is made to help you keep information on people you know: friends, family, colleagues. Use WAYA's graphical interface to create and update notes on persons.
 
-![Example](images/example.png)
+![Example](images/example_person.png)
 
 ## Getting Started
 
