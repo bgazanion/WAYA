@@ -160,7 +160,12 @@ public class PersonPanel extends JPanel {
 		// --------------------------------------------------------------------
 		infoPanel = new JPanel(new GridBagLayout());
 		
-		JPanel centerPanel = new JPanel(new BorderLayout());
+		// Notice: ScrollablePanel is needed here to enable line wrap of info 
+		// text area. 
+		ScrollablePanel centerPanel = new ScrollablePanel(new BorderLayout());
+		centerPanel.setScrollableWidth( ScrollablePanel.ScrollableSizeHint.FIT );
+		centerPanel.setScrollableBlockIncrement(
+		    ScrollablePanel.VERTICAL, ScrollablePanel.IncrementType.PERCENT, 200);
 		centerPanel.add(infoPanel, BorderLayout.PAGE_START);
 		
 		infoScrollPane = new JScrollPane(centerPanel);
@@ -356,8 +361,7 @@ public class PersonPanel extends JPanel {
 		GridBagConstraints constraints = new GridBagConstraints();
 		constraints.gridx = 0;
 		constraints.gridy = 0;
-		//constraints.weighty = 1;
-		//constraints.anchor = GridBagConstraints.NORTH;
+		constraints.anchor = GridBagConstraints.BASELINE;
 		constraints.insets = new java.awt.Insets(2, 2, 2, 2);
 		
 		// build elements for each information
@@ -406,9 +410,10 @@ public class PersonPanel extends JPanel {
 				constraints.fill = GridBagConstraints.HORIZONTAL;
 				JTextArea textArea = new JTextArea(values.get(valueIndex));
 				textArea.setLineWrap(true);
-//				textArea.setColumns(INFO_VALUE_COLUMNS);
+				textArea.setWrapStyleWord(true);
 				infoPanel.add(textArea, constraints);
 				componentsIndices.add(infoPanel.getComponentCount()-1);
+				constraints.weighty = 0;
 				
 				// button to remove the value
 				constraints.gridx = 3;
