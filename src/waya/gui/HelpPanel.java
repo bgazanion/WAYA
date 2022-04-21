@@ -31,13 +31,11 @@ public class HelpPanel extends JPanel {
 		mainFrame = frame;
 		String localeString = getLocale().toString();
 		URL url = HelpPanel.class.getResource("resources/help_"+localeString+".html");
-		LOGGER.info("url="+url);
 		String text = "";
 		InputStream inputStream = HelpPanel.class.getResourceAsStream("resources/help_"+localeString+".html");
 		if (inputStream == null) {
-			LOGGER.info("inputStream = null");
+			LOGGER.warning("No help file found for locale "+localeString);
 		} else {
-			LOGGER.info("inputStream OK");
 			try (InputStreamReader streamReader = new InputStreamReader(inputStream);
 				 BufferedReader bufferedReader = new BufferedReader(streamReader)) {
 				String line;
