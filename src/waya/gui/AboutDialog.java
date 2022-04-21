@@ -1,16 +1,20 @@
 package waya.gui;
 
+import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Frame;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.security.InvalidParameterException;
 import java.util.ResourceBundle;
 import java.util.logging.Logger;
 
+import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -36,7 +40,7 @@ public class AboutDialog extends JDialog {
 		super(owner, true);
 		licenseLoaded = false;
 		JPanel mainPanel = new JPanel();
-		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
+		mainPanel.setLayout(new BorderLayout());
 		
 		// text for Waya and dependencies		
 		text = "<html>\n"+
@@ -80,16 +84,15 @@ public class AboutDialog extends JDialog {
 		
 		
 		JScrollPane scrollPane = new JScrollPane(textPane);
-		mainPanel.add(scrollPane);
-		mainPanel.add(licenseButton);
+		mainPanel.add(scrollPane, BorderLayout.CENTER);
+		JPanel buttonInnerPanel = new JPanel();
+		buttonInnerPanel.add(licenseButton);
+		mainPanel.add(buttonInnerPanel, BorderLayout.PAGE_END);
 		mainPanel.setPreferredSize(new Dimension(MIN_WIDTH, MIN_HEIGHT));
 		
 		setContentPane(mainPanel);
 		pack();
 		setVisible(true);
-//		setMinimumSize(new Dimension(MIN_WIDTH, MIN_HEIGHT));
-//		setSize(new Dimension(MIN_WIDTH, MIN_HEIGHT));
-//		setPreferredSize(new Dimension(MIN_WIDTH, MIN_HEIGHT));
 		
 	}
 	
