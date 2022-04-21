@@ -3,7 +3,8 @@ package waya.gui;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Frame;
-import java.awt.GridLayout;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
@@ -24,6 +25,7 @@ import javax.swing.JScrollPane;
 
 import waya.engine.PersonManager;
 import waya.engine.TagManager;
+//import waya.gui.TagEditor.DeleteTagButton;
 
 
 public class TagAllPersonsDialogBuilder {
@@ -31,7 +33,7 @@ public class TagAllPersonsDialogBuilder {
 	private static final Logger LOGGER = Logger.getLogger(MainFrame.class.getPackage().getName());
 	private static final ResourceBundle MESSAGES = ResourceBundle.getBundle("waya.gui.resources.messages");
 	private static final String CLOSE = MESSAGES.getString("button_close_edit_tags_for_all");
-	private static final int PREFERRED_WIDTH = 400;
+	private static final int PREFERRED_WIDTH = 350;
 	private static final int PREFERRED_HEIGHT = 400;
 	
 	
@@ -112,8 +114,10 @@ public class TagAllPersonsDialogBuilder {
 			checkBoxList = new LinkedList<>();
 			
 			// panel containing the name of persons with a checkbox for each
-			JPanel listPanel = new JPanel(new GridLayout(0, 1));
-			listPanel.setBorder(BorderFactory.createEmptyBorder(0, 5, 0, 5));;
+			JPanel listPanel = new JPanel(new GridBagLayout());
+			GridBagConstraints constraints = new GridBagConstraints();
+			constraints.gridy = 0;
+			listPanel.setBorder(BorderFactory.createEmptyBorder(0, 5, 0, 5));
 			for (int index=0; index < personIdList.size(); index++) {
 				String personId = personIdList.get(index);
 				String name = personNameList.get(index);
@@ -124,10 +128,17 @@ public class TagAllPersonsDialogBuilder {
 				}
 				checkBoxList.add(checkBox);
 				// insert item in GUI
-				JPanel itemPanel = new JPanel(new BorderLayout());
-				itemPanel.add(new JLabel(name), BorderLayout.LINE_START);
-				itemPanel.add(checkBox, BorderLayout.LINE_END);
-				listPanel.add(itemPanel);
+				constraints.gridx = 0;
+				constraints.weightx = 1;
+				constraints.fill = GridBagConstraints.HORIZONTAL;
+				listPanel.add(new JLabel(name), constraints);
+				
+				constraints.gridx = 1;
+				constraints.weightx = 0;
+				constraints.fill = GridBagConstraints.NONE;
+				listPanel.add(checkBox, constraints);
+				
+				constraints.gridy += 1;
 			}
 			
 			// button to close the dialog and save the modification on the tag
@@ -142,6 +153,7 @@ public class TagAllPersonsDialogBuilder {
 			// main panel
 			JPanel dialogPanel = new JPanel(new BorderLayout());
 			dialogPanel.add(new JScrollPane(listPanel), BorderLayout.CENTER);
+			dialogPanel.add(closeButton, BorderLayout.PAGE_END);
 			setContentPane(dialogPanel);
 			pack();
 			setPreferredSize(new Dimension(PREFERRED_WIDTH, PREFERRED_HEIGHT));
