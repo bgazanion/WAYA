@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Logger;
 
+import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -38,6 +39,7 @@ public class TagEditor extends JPanel {
 	private static final String CREATE_TAG = MESSAGES.getString("button_tags_editor_create_tag");
 	
 	private static final int LABEL_PREF_WIDTH = 300;
+	private static final int BORDER = 10;
 	
 	private JPanel tagPanel;
 	private TagManager tagManager;
@@ -102,11 +104,20 @@ public class TagEditor extends JPanel {
 		innerBottomPanel.add(closeButton);
 		bottomPanel.add(innerBottomPanel);
 		
-		// layout
-		setLayout(new BorderLayout());
-		add(new JScrollPane(tagPanel), BorderLayout.CENTER);
-		add(bottomPanel, BorderLayout.PAGE_END);
+		// center panel: tags
+		// -> ugly workarounds below to ensure top-left align
+		JPanel innerInnerPanel = new JPanel(new BorderLayout());
+		innerInnerPanel.add(tagPanel, BorderLayout.LINE_START);
+		JPanel innerPanel = new JPanel(new BorderLayout());
+		innerPanel.add(innerInnerPanel, BorderLayout.PAGE_START);
+		JScrollPane centerScrollPane = new JScrollPane(innerPanel);
+		centerScrollPane.setBorder(BorderFactory.createEmptyBorder(BORDER, BORDER, BORDER, BORDER));
 		
+		// global layout
+		setLayout(new BorderLayout());
+		add(centerScrollPane, BorderLayout.CENTER);
+		add(bottomPanel, BorderLayout.PAGE_END);
+		revalidate();
 		updateTagListPanel();
 		
 	}
