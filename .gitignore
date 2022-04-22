@@ -2,3 +2,6 @@
 /bin
 /test/export
 /data
+/.classpath
+/.project
+/.settings
