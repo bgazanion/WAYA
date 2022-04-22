@@ -28,7 +28,6 @@ import java.util.logging.Logger;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
@@ -190,11 +189,6 @@ public class MainFrame extends JFrame {
 		GridBagConstraints constraints = new GridBagConstraints();
 		constraints.gridx = 0;
 		constraints.fill = GridBagConstraints.HORIZONTAL;
-		
-		// Intro text
-		JLabel introLabel = new JLabel("Welcome in Waya");
-		constraints.gridy = 0;
-		panel.add(introLabel, constraints);
 		
 		// create a person
 		JButton createPersonButton = new JButton(messages.getString("button_create_person"));
