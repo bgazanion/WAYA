@@ -44,7 +44,7 @@ public class MainFrame extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private static final Logger LOGGER = Logger.getLogger(MainFrame.class.getPackage().getName());
 	private ResourceBundle messages = ResourceBundle.getBundle("waya.gui.resources.messages");
-	private static final String PROP_USER_CONFIG_FILE = "waya_user_config_file";
+	private static final File USER_CONFIG_FILE = new File("./config.properties");
 	private static final File DATA_DIR = new File("data");
 	private static final int ID_LENGTH = 6;
 	private static final int WINDOW_WIDTH = 800;
@@ -309,10 +309,10 @@ public class MainFrame extends JFrame {
 		}
 		
 		// load user configuration file
-		String userConfigFile = System.getProperty(PROP_USER_CONFIG_FILE);
-		if (userConfigFile != null) {
+		if (USER_CONFIG_FILE.exists()) {
+			LOGGER.info("Load configuration from user file");
 			try {
-				FileInputStream userInput = new FileInputStream(userConfigFile);
+				FileInputStream userInput = new FileInputStream(USER_CONFIG_FILE);
 				config.load(userInput);
 				// debug
 				LOGGER.finest("user config:");
@@ -320,9 +320,7 @@ public class MainFrame extends JFrame {
 					String strKey = (String) key;
 					LOGGER.finest(strKey+": "+config.getProperty(strKey));
 				}
-			} catch (FileNotFoundException | SecurityException e) {
-				LOGGER.info("INFO: No user config file");
-			} catch (IOException | IllegalArgumentException e) {
+			} catch (IOException | IllegalArgumentException | SecurityException e) {
 				LOGGER.warning("WARNING: Cannot load user config file");
 				e.printStackTrace();
 			}
