@@ -37,6 +37,7 @@ public class PersonPanel extends JPanel {
 	private static final int INFO_NAME_COLUMNS = 20;
 	private static final int IMAGE_WIDTH = 150;
 	private static final int IMAGE_HEIGHT = 150;
+	private static final int IMAGE_IMPORT_TO_DISPLAY_RATIO = 4;
 	private static final String IMAGE_END = "_image.png";
 	
 	private PersonManager personManager;
@@ -81,7 +82,8 @@ public class PersonPanel extends JPanel {
 		headerConstraints.weightx = 0;
 		headerConstraints.fill = GridBagConstraints.VERTICAL;
 		headerConstraints.gridheight = 3;
-		ImageViewer imageViewer = new ImageViewer(imageFile, IMAGE_WIDTH, IMAGE_HEIGHT);
+		double imageScaleRatio = 1./IMAGE_IMPORT_TO_DISPLAY_RATIO;
+		ImageViewer imageViewer = new ImageViewer(imageFile, IMAGE_WIDTH, IMAGE_HEIGHT, imageScaleRatio);
 		headerPanel.add(imageViewer, headerConstraints);
 		headerConstraints.gridheight = 1;
 		
@@ -552,8 +554,8 @@ public class PersonPanel extends JPanel {
 					if (dialog.getFile() != null && dialog.getDirectory() != null) {
 						File source = new File(dialog.getDirectory(), dialog.getFile());
 						LOGGER.finest("ImageSelectorButton - source = "+source.toString());
-						int width = imageViewer.getWidth();
-						int height = imageViewer.getHeight();
+						int width = IMAGE_IMPORT_TO_DISPLAY_RATIO*imageViewer.getWidth();
+						int height = IMAGE_IMPORT_TO_DISPLAY_RATIO*imageViewer.getHeight();
 						LOGGER.finest("ImageSelectorButton - import file = "+imageFile.toString());
 						FileTools.importAndResizeImage(source, width, height, imageFile);
 						imageViewer.updateImage();

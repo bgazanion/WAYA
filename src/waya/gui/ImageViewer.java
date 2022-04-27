@@ -2,7 +2,9 @@ package waya.gui;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.geom.AffineTransform;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Image;
 import java.io.File;
 import java.util.ResourceBundle;
@@ -21,6 +23,7 @@ public class ImageViewer extends JPanel {
 	private Image image;
 	private int width;
 	private int height;
+	private double scaleRatio;
 	private File imageFile;
 	private static final ResourceBundle MESSAGES = ResourceBundle.getBundle("waya.gui.resources.messages");
 	private static final String NO_PHOTO_STRING = MESSAGES.getString("label_no_photo");
@@ -30,11 +33,12 @@ public class ImageViewer extends JPanel {
 		noPhotoLabel = new JLabel(NO_PHOTO_STRING, SwingConstants.CENTER);
 	}
 	
-	public ImageViewer(File inputImageFile, int inputWidth, int inputHeight) {
+	public ImageViewer(File inputImageFile, int inputWidth, int inputHeight, double inputScale) {
 		super();
 		imageFile = inputImageFile;
 		width = inputWidth;
 		height = inputHeight;
+		scaleRatio = inputScale;
 		setPreferredSize(new Dimension(width, height));
 		setLayout(new BorderLayout());
 		setBorder(new JButton().getBorder());
@@ -74,7 +78,8 @@ public class ImageViewer extends JPanel {
 	public void paint(Graphics g) {
 		super.paint(g);
 		if (image != null) {
-			g.drawImage(image, 0, 0, this);
+			Graphics2D g2d = (Graphics2D) g;
+			g2d.drawImage(image, AffineTransform.getScaleInstance(scaleRatio, scaleRatio), this);
 		}
 	}
 }
