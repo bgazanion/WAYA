@@ -109,6 +109,9 @@ public class MainFrame extends JFrame {
 	
 	@Override
 	public void dispose() {
+		// close current person panel - if any - to save its info
+		closePersonPanel(false);
+		// close handlers
 		LOGGER.finest("Exit main frame");
 		for (Handler handler : LOGGER.getHandlers()) {
 			handler.close();
